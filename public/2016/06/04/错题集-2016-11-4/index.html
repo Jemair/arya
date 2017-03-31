@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>错题集 2016/6/4 | LiamW - 每一次的相遇都是久别重逢</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一元函数连接器查找一个字符串中有多少字符重复多个三和五的求和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="错题集 2016/6/4">
+<meta property="og:url" content="http://yoursite.com/2016/06/04/错题集-2016-11-4/index.html">
+<meta property="og:site_name" content="LiamW - 每一次的相遇都是久别重逢">
+<meta property="og:description" content="一元函数连接器查找一个字符串中有多少字符重复多个三和五的求和">
+<meta property="og:updated_time" content="2017-02-09T02:08:17.777Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="错题集 2016/6/4">
+<meta name="twitter:description" content="一元函数连接器查找一个字符串中有多少字符重复多个三和五的求和">
+  
+  
+    <link rel="icon" href="http://og08ttv6v.bkt.clouddn.com/favicon.png">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="http://og08ttv6v.bkt.clouddn.com/user-icon1.gif" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">LiamW</a></h1>
+		</hgroup>
+
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/js">js</a></li>
+	        
+				<li><a href="/tags/学习笔记">学习笔记</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">友链</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">LiamW</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="http://og08ttv6v.bkt.clouddn.com/user-icon1.gif" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">LiamW</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/js">js</a></li>
+		        
+					<li><a href="/tags/学习笔记">学习笔记</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-错题集-2016-11-4" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      错题集 2016/6/4
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>一元函数连接器<br>查找一个字符串中有多少字符重复<br>多个三和五的求和</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="一元函数连接器"><a href="#一元函数连接器" class="headerlink" title="一元函数连接器"></a>一元函数连接器</h2><p>Your task is to write a higher order function for chaining together a list of unary functions. In other words, it should return a function that does a left fold on the given functions.<br><code>chained([a,b,c,d])(input)</code></p>
+<p>Should yield the same result as<br><code>d(c(b(a(input))))</code></p>
+<p>输入一组函数名，嵌套执行这些函数</p>
+<p><em>Example Tests:</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params">x</span>)</span>&#123; <span class="keyword">return</span> x*<span class="number">2</span> &#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params">x</span>)</span>&#123; <span class="keyword">return</span> x+<span class="number">2</span> &#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f3</span>(<span class="params">x</span>)</span>&#123; <span class="keyword">return</span> <span class="built_in">Math</span>.pow(x,<span class="number">2</span>) &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f4</span>(<span class="params">x</span>)</span>&#123; <span class="keyword">return</span> x.split(<span class="string">""</span>).concat().reverse().join(<span class="string">""</span>).split(<span class="string">" "</span>)&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f5</span>(<span class="params">xs</span>)</span>&#123; <span class="keyword">return</span> xs.concat().reverse() &#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f6</span>(<span class="params">xs</span>)</span>&#123; <span class="keyword">return</span> xs.join(<span class="string">"_"</span>) &#125;</div><div class="line"></div><div class="line">Test.assertEquals( chained([f1,f2,f3])(<span class="number">0</span>), <span class="number">4</span> )</div><div class="line">Test.assertEquals( chained([f1,f2,f3])(<span class="number">2</span>), <span class="number">36</span> )</div><div class="line">Test.assertEquals( chained([f3,f2,f1])(<span class="number">2</span>), <span class="number">12</span> )</div><div class="line"></div><div class="line">Test.assertEquals(chained([f4,f5,f6])(<span class="string">"lorem ipsum"</span>), <span class="string">"merol_muspi"</span>)</div></pre></td></tr></table></figure></p>
+<p><em>My Solution:</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">none</div></pre></td></tr></table></figure></p>
+<p><em>Clever:</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">chained</span>(<span class="params">functions</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">input</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> functions.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">input, fn</span>)</span>&#123; <span class="keyword">return</span> fn(input) &#125;, input);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>知识点：<br><code>Array</code>对象的<code>reduce()</code>方法</p>
+<blockquote>
+<p>在需要用到归并的时候<code>reduce()</code>方法是十分好用的<br><code>reduce()</code>方法接收两个参数，第一个参数是在每一项上调用的函数，第二个参数（可选的）作为归并的初始值<br>作为参数的函数接受四个参数：1.前一个值； 2.当前值； 3.项目的索引； 4.数组对象。（比迭代方法的函数多一个参数）</p>
+</blockquote>
+<p>闭包</p>
+<blockquote>
+<p>将一个函数作为返回值返回给另一个函数</p>
+</blockquote>
+</blockquote>
+<hr>
+<h2 id="重复字符计算"><a href="#重复字符计算" class="headerlink" title="重复字符计算"></a>重复字符计算</h2><p>Write a function that will return the count of distinct case-insensitive alphabetic characters that occur more than once in the input string. The input string can be assumed to contain only alphanumeric characters, including digits, uppercase and lowercase alphabets.</p>
+<p>Example:</p>
+<p>“abcde” -&gt; 0 <code># no characters repeats more than once</code><br>“aabbcde” -&gt; 2 <code># &#39;a&#39; and &#39;b&#39;</code><br>“aabbcdeB” -&gt; 2 <code># &#39;a&#39; and &#39;b&#39;</code><br>“indivisibility” -&gt; 1 <code># &#39;i&#39;</code><br>“Indivisibilities” -&gt; 2 <code># &#39;i&#39; and &#39;s&#39;</code></p>
+<p><em>Example Tests:</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Test.assertEquals(duplicateCount(<span class="string">""</span>), <span class="number">0</span>);</div><div class="line">Test.assertEquals(duplicateCount(<span class="string">"abcde"</span>), <span class="number">0</span>);</div><div class="line">Test.assertEquals(duplicateCount(<span class="string">"aabbcde"</span>), <span class="number">2</span>);</div><div class="line">Test.assertEquals(duplicateCount(<span class="string">"aabBcde"</span>), <span class="number">2</span>,<span class="string">"should ignore case"</span>);</div><div class="line">Test.assertEquals(duplicateCount(<span class="string">"Indivisibility"</span>), <span class="number">1</span>)</div><div class="line">Test.assertEquals(duplicateCount(<span class="string">"Indivisibilities"</span>), <span class="number">2</span>, <span class="string">"characters may not be adjacent"</span>)</div></pre></td></tr></table></figure></p>
+<p><em>My Solution:</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">duplicateCount</span>(<span class="params">text</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> a = text.split(<span class="string">''</span>);</div><div class="line">    <span class="keyword">var</span> repeat = [];</div><div class="line">    <span class="keyword">var</span> result = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; a.length; i++)&#123;</div><div class="line">      a[i] = a[i].toLowerCase();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; a.length; i++)&#123;</div><div class="line">    <span class="attr">begin</span>:</div><div class="line">      <span class="keyword">for</span>(<span class="keyword">var</span> j = i + <span class="number">1</span>; j &lt; a.length; j++)&#123;</div><div class="line">        <span class="keyword">if</span>(a[i] == a[j])&#123;</div><div class="line">          <span class="keyword">for</span>(<span class="keyword">var</span> k = <span class="number">0</span>; k &lt; repeat.length; k++)&#123;</div><div class="line">            <span class="keyword">if</span>(a[j] == repeat[k])&#123;</div><div class="line">              <span class="keyword">break</span> begin;</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">          result++;</div><div class="line">          repeat.push(a[i]);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p><em>Clever:</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">duplicateCount</span>(<span class="params">text</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> (text.toLowerCase().split(<span class="string">''</span>).sort().join(<span class="string">''</span>).match(<span class="regexp">/([^])\1+/g</span>) || []).length;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>知识点：<br>字符串和数组的基础操作</p>
+<blockquote>
+<p><code>Str.split()</code>方法用于将字符串使用规定的字符分隔，如果不传入参数，则将每个字符单独保存为数组的一项<br><code>Array.join()</code>方法用于将数组拼接为字符串，如果不传入参数则拼接为整个字符串</p>
+</blockquote>
+<p>正则表达式</p>
+<blockquote>
+<p><code>([^])</code>表示匹配所有字符（包括换行符）；<code>(.)</code>表示匹配所有字符（不包括换行符）<br><code>\1</code> 表示重复1次（连续出现两个）； <code>\1+</code> 表示重复多次<br>一个优秀的学习正则表达式的网站 <a href="http://www.regexr.com/" target="_blank" rel="external">RegExr</a></p>
+</blockquote>
+</blockquote>
+<hr>
+<h2 id="多个三和五的求和"><a href="#多个三和五的求和" class="headerlink" title="多个三和五的求和"></a>多个三和五的求和</h2><p>If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.</p>
+<p>Finish the solution so that it returns the sum of all the multiples of 3 or 5 below the number passed in.</p>
+<blockquote>
+<p>Note: If the number is a multiple of both 3 and 5, only count it once.</p>
+</blockquote>
+<p>输入一个整数，返回所有小于这个整数的能整除3或5的数的和<br><em>My Solution:</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">solution</span>(<span class="params">number</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> result = <span class="number">0</span>;</div><div class="line">    </div><div class="line">   <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; number; i++)&#123;</div><div class="line">     <span class="keyword">if</span>(! ((i % <span class="number">3</span>)&amp;&amp;(i % <span class="number">5</span>))) result += i;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><em>Clever:</em><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">solution</span>(<span class="params">number</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> n3 = <span class="built_in">Math</span>.floor(--number/<span class="number">3</span>), n5 = <span class="built_in">Math</span>.floor(number/<span class="number">5</span>), n15 = <span class="built_in">Math</span>.floor(number/<span class="number">15</span>);</div><div class="line">  <span class="keyword">return</span> (<span class="number">3</span> * n3 * (n3 + <span class="number">1</span>) + <span class="number">5</span> * n5 * (n5 + <span class="number">1</span>) - <span class="number">15</span> * n15 * (n15+<span class="number">1</span>)) /<span class="number">2</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>知识点：<br>表达式的执行速度</p>
+<blockquote>
+<p>算数表达式大大快于函数表达式<br><code>while</code>循环快于<code>for</code>循环</p>
+</blockquote>
+</blockquote>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/06/04/错题集-2016-11-4/" class="archive-article-date">
+  	<time datetime="2016-06-04T09:55:25.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-06-04</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习笔记/">学习笔记</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/高程读书笔记（更新中...）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          高程读书笔记（更新中...）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/12/jQuery-API的一些细节-二-选择器、文档处理和筛选/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">jQuery API的一些细节(二)--选择器、文档处理和筛选</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="错题集-2016-11-4" data-title="错题集 2016/6/4" data-url="http://yoursite.com/2016/06/04/错题集-2016-11-4/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"liamw"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 LiamW
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true,
+		root: "/",
+		innerArchive: false
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+    
+    
+      <li data-hook="tools-section-friends"><span class="text">友链</span><i class="icon-link"></i></li>
+    
+    
+  </ul>
+  <div class="tools-wrap">
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-friends">
+  		
+  			<div class="friends-wrap" id="js-friends">
+  			
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="https://io.n7then.com">可达鸭</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://shawnzeng.com">shawn</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="https://sa.bi">sabi - 我有一壶酒,足矣慰风霜</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="https://itroy.cc">Troy</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="https://doctorfei.github.io/">王鹏飞</a>
+  	        
+  	        </div>
+  		
+    	</section>
+    
+
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

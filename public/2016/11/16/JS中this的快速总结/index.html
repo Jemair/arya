@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>JS中this的快速总结 | LiamW - 每一次的相遇都是久别重逢</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="JS的坑真的是数不胜数，我一直想写一篇笔记来好好记录一下this这一巨坑的使用方法，正好在掘金翻到了这篇文章JavaScript中的this陷阱的最全收集–没有之一。自己跟着代码敲了一遍之后结合自己平时的实践写下了这篇心得，收获颇深。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS中this的快速总结">
+<meta property="og:url" content="http://yoursite.com/2016/11/16/JS中this的快速总结/index.html">
+<meta property="og:site_name" content="LiamW - 每一次的相遇都是久别重逢">
+<meta property="og:description" content="JS的坑真的是数不胜数，我一直想写一篇笔记来好好记录一下this这一巨坑的使用方法，正好在掘金翻到了这篇文章JavaScript中的this陷阱的最全收集–没有之一。自己跟着代码敲了一遍之后结合自己平时的实践写下了这篇心得，收获颇深。">
+<meta property="og:updated_time" content="2017-02-08T02:49:31.818Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS中this的快速总结">
+<meta name="twitter:description" content="JS的坑真的是数不胜数，我一直想写一篇笔记来好好记录一下this这一巨坑的使用方法，正好在掘金翻到了这篇文章JavaScript中的this陷阱的最全收集–没有之一。自己跟着代码敲了一遍之后结合自己平时的实践写下了这篇心得，收获颇深。">
+  
+  
+    <link rel="icon" href="http://og08ttv6v.bkt.clouddn.com/favicon.png">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="http://og08ttv6v.bkt.clouddn.com/user-icon1.gif" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">LiamW</a></h1>
+		</hgroup>
+
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/js">js</a></li>
+	        
+				<li><a href="/tags/学习笔记">学习笔记</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">友链</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">LiamW</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="http://og08ttv6v.bkt.clouddn.com/user-icon1.gif" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">LiamW</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/js">js</a></li>
+		        
+					<li><a href="/tags/学习笔记">学习笔记</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-JS中this的快速总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JS中this的快速总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>JS的坑真的是数不胜数，我一直想写一篇笔记来好好记录一下<code>this</code>这一巨坑的使用方法，正好在<a href="http://gold.xitu.io/" target="_blank" rel="external">掘金</a>翻到了这篇文章<a href="https://segmentfault.com/a/1190000002640298#articleHeader3" target="_blank" rel="external">JavaScript中的this陷阱的最全收集–没有之一</a>。自己跟着代码敲了一遍之后结合自己平时的实践写下了这篇心得，收获颇深。</p>
+</blockquote>
+<a id="more"></a>
+<p>在JS中使用<code>this</code>，大致分为以下几种情况：</p>
+<h2 id="一、在全局范围下使用this"><a href="#一、在全局范围下使用this" class="headerlink" title="一、在全局范围下使用this"></a>一、在全局范围下使用<code>this</code></h2><p>在全局范围下，<code>this</code>永远指向的是JS代码中的<code>global</code>对象，即在浏览器中，<code>this</code>指向的就是<code>window</code>对象</p>
+<h2 id="二、在调用一个方法时使用this"><a href="#二、在调用一个方法时使用this" class="headerlink" title="二、在调用一个方法时使用this"></a>二、在调用一个方法时使用<code>this</code></h2><p>在一个方法（函数）中，<code>this</code>指代的是包含<code>this</code>的这个方法所属的对象。换句话说，包含<code>this</code>的这个函数是谁的方法，谁就是<code>this</code>所指代的对象。<br>比如说在这个例子中<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj.fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.info(<span class="keyword">this</span>)&#125;;</div><div class="line">obj.fn();</div></pre></td></tr></table></figure></p>
+<p>这里的<code>this</code>指代的就是<code>obj</code>这个对象。<br>值得注意的是，在浏览器下，<code>window</code>对象在调用函数时是可以被省略的，也就是说，在<strong>任何情况下</strong>（无论当前函数的作用域是否包含在其他函数中），只要使用的函数未声明调用者，<code>this</code>都指向<code>window</code>对象，来看下面这个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> timer = setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.info(<span class="keyword">this</span>)              <span class="comment">//window</span></div><div class="line">&#125;, <span class="number">30</span>)</div></pre></td></tr></table></figure></p>
+<p>BTW: 在严格模式下，对于没有指定调用者的函数中的<code>this</code>会显示为<code>undefined</code><br>BTW2: 如果在函数内部想要改变<code>this</code>的指向，可以有两种方法：一种是将<code>this</code>作为参数传递给函数。事实上<code>window</code>对象的<code>alert()</code>方法、<code>console</code>对象的<code>log()</code>方法都是将<code>this</code>作为参数传递到方法中，所以在这些方法中<code>this</code>的指向也就不存在问题了；第二种方式是在<code>this</code>指向正常的时候使用一个变量将<code>this</code>保存起来，这种方法适用于函数多重嵌套的情形，比如以下的例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> oDiv1 = <span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>);    <span class="comment">//这里使用DOM元素只是因为最为常见，在其他对象中情况也是相似的</span></div><div class="line"><span class="keyword">var</span> oDiv2 = <span class="built_in">document</span>.getElementById(<span class="string">'div2'</span>);</div><div class="line">oDiv1.onmouseenter = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.info(<span class="keyword">this</span>);         <span class="comment">//oDiv  此处非重点，详情见DOM EVENT中的this一节</span></div><div class="line">    <span class="keyword">var</span> that = <span class="keyword">this</span>;</div><div class="line">    oDiv2.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.info(<span class="keyword">this</span>)      <span class="comment">//oDiv2 此处this的指向改变，使用this无法访问到oDiv1了</span></div><div class="line">        <span class="built_in">console</span>.info(that)      <span class="comment">//声明that变量将上一个this的值保存起来后，就可以通过that访问到oDiv1了</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当然，还有更特殊的情况，是在方法无法接受参数的情况下，如果要使用调用父级作用域中<code>this</code>所指向的值的话就更麻烦了，需要使用到闭包。最常见的情况就是在定时器中调用这个定时器所处的作用域，再举个栗子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> oDiv1 = <span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>);</div><div class="line">oDiv1.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> that = <span class="keyword">this</span>;        <span class="comment">//此处将this作为值保存在了that中</span></div><div class="line"><span class="comment">//setInterval()方法只能接受一个不带参数的函数作为参数。具体原因此处不表，可以搜索JS调用函数时加括号和不加括号的区别</span></div><div class="line">    <span class="keyword">var</span> timer = setInterval(<span class="function"><span class="keyword">function</span> (<span class="params">that</span>)</span>&#123;        </div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="comment">//此处将这个不带参数的匿名函数作为返回值返回，这是一个最简单的闭包实现</span></div><div class="line">       <span class="built_in">console</span>.info(that)   <span class="comment">//oDiv1 </span></div><div class="line">    &#125;</div><div class="line">&#125;, <span class="number">30</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="三、当用new操作符调用函数时使用this"><a href="#三、当用new操作符调用函数时使用this" class="headerlink" title="三、当用new操作符调用函数时使用this"></a>三、当用<code>new</code>操作符调用函数时使用<code>this</code></h2><p>所谓用<code>new</code>操作符调用函数，讲人话，就是<code>new</code>一个对象时，对象的构造函数里的this。毫无疑问，这时的<code>this</code>指向了这个新创建出来的对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span> (<span class="params">name</span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">    <span class="built_in">console</span>.info(<span class="keyword">this</span>);     <span class="comment">//Foo &#123;name: "xiaoming"&#125;</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> Foo(<span class="string">'xiaoming'</span>);</div></pre></td></tr></table></figure></p>
+<p>同样的，如果是在一个构造函数中嵌套了一个子作用域，如果要找到父作用域中的<code>this</code>，也可以用一个变量将<code>this</code>保存起来<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span> (<span class="params">name, obj</span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">    <span class="keyword">this</span>.obj = obj;</div><div class="line">    <span class="keyword">var</span> _that = <span class="keyword">this</span>;        <span class="comment">//记得这里一定要使用var操作符声明变量，否则你将生成一个全局变量</span></div><div class="line">    <span class="comment">//注意这里不能将this作为这个对象的属性来保存(this.that = this;)，这样会使你在下面的代码中陷入</span></div><div class="line">    <span class="comment">//我要找对象 -&gt; 我要找到对象的this属性 -&gt; 我要找对象  的死循环....</span></div><div class="line">    <span class="keyword">this</span>.obj.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.info(<span class="keyword">this</span>)      <span class="comment">//oDiv</span></div><div class="line">        <span class="built_in">console</span>.info(that)      <span class="comment">//Foo &#123;name: "xiaoming", obj: div#div1&#125;</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> oDiv = <span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>)</div><div class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> Foo(<span class="string">'xiaoming'</span>, oDiv);</div></pre></td></tr></table></figure></p>
+<h2 id="四、在原型中使用this"><a href="#四、在原型中使用this" class="headerlink" title="四、在原型中使用this"></a>四、在原型中使用<code>this</code></h2><p>在原型中我们所做的事情无非两类。一是定义原型的方法，而是定义原型共有的属性。</p>
+<ol>
+<li>在定义方法时，<code>this</code>的指向和构造函数中一样，都是指向了新创建的这个实例。</li>
+<li>而在定义属性时，<code>this</code>则指向了<code>window</code>对象（和前面一样，在严格模式下这里会返回<code>undefined</code>）。那么在需要在原型中定义属性时使用<code>this</code>的时候，需要先在构造函数里明确返回新实例，然后再在原型里通过这个方法获取到属性（感觉有这种奇葩需求的地方少之又少，干脆权当奇技淫巧记住好了）<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Thing</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line">Thing.prototype.sayThat = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="built_in">console</span>.info(<span class="keyword">this</span>);     <span class="comment">//在原型定义的函数中，this如我们所愿的指向了新创建的这个对象</span></div><div class="line">&#125;</div><div class="line">Thing.prototype.name2 = Thing().name;</div><div class="line"><span class="keyword">var</span> thing = <span class="keyword">new</span> Thing(<span class="string">'xiaoming'</span>);</div><div class="line">thing.sayThat();</div><div class="line"><span class="built_in">console</span>.info(thing.name2);      <span class="comment">//这里各种hack写法...已然无语</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="五、对象字面量中使用this"><a href="#五、对象字面量中使用this" class="headerlink" title="五、对象字面量中使用this"></a>五、对象字面量中使用<code>this</code></h2><p>在一个对象字面量里，你可以直接通过<code>this</code>来引用这个对象的其他属性。这和用<code>new</code>来新建一个实例是不一样的<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    <span class="attr">foo</span>: <span class="string">'bar'</span>,</div><div class="line">    <span class="attr">logFoo</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.info(<span class="keyword">this</span>.foo)      <span class="comment">//'bar'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当你需要越过当前对象去访问父级对象上的属性的时候，直接使用父级对象的名字就好了<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    <span class="attr">foo</span>: <span class="string">'bar'</span>,</div><div class="line">    <span class="attr">deeper</span>: &#123;</div><div class="line">        <span class="attr">logFoo</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="built_in">console</span>.info(obj.foo);  <span class="comment">//'bar'</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="六、DOM-Event中使用this"><a href="#六、DOM-Event中使用this" class="headerlink" title="六、DOM Event中使用this"></a>六、DOM Event中使用<code>this</code></h2><ul>
+<li><p>我们已经知道，在一个HTML DOM事件处理程序里面，this始终指向这个处理程序被所绑定到的HTML DOM节点</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> oDiv1 = <span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>);</div><div class="line">oDiv1.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.info(<span class="keyword">this</span>);         <span class="comment">//oDiv1</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>除非你自己通过<code>bind()</code>切换了上下文</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> oDiv1 = <span class="built_in">document</span>.getElementById(<span class="string">'div1'</span>);</div><div class="line"><span class="keyword">var</span> oDiv2 = <span class="built_in">document</span>.getElementById(<span class="string">'div2'</span>);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleClick</span> (<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.info(<span class="keyword">this</span>);</div><div class="line">&#125;</div><div class="line">oDiv1.onclick = handleClick.bind(oDiv2);    <span class="comment">//oDiv2</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="七、其他的一些关于this的小知识"><a href="#七、其他的一些关于this的小知识" class="headerlink" title="七、其他的一些关于this的小知识"></a>七、其他的一些关于<code>this</code>的小知识</h2><ol>
+<li>你不能重写<code>this</code>，因为它是系统的保留字</li>
+<li>在jQuery中<code>this</code>能发挥更大的威力，因为jQ中的数组遍历方法改变了<code>this</code>的指向，使它指向了当前处于循环中的元素<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'li'</span>).forEach&#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.info($(<span class="string">'li'</span>).index(<span class="keyword">this</span>));      <span class="comment">//这里会顺序返回每一个'li'元素的索引</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>写完了。以上。</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/11/16/JS中this的快速总结/" class="archive-article-date">
+  	<time datetime="2016-11-16T15:23:16.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-16</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/12/17/CSS常用竖直居中方法总结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          CSS常用竖直居中方法总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/高程读书笔记（更新中...）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">高程读书笔记（更新中...）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="JS中this的快速总结" data-title="JS中this的快速总结" data-url="http://yoursite.com/2016/11/16/JS中this的快速总结/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"liamw"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 LiamW
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true,
+		root: "/",
+		innerArchive: false
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+    
+    
+      <li data-hook="tools-section-friends"><span class="text">友链</span><i class="icon-link"></i></li>
+    
+    
+  </ul>
+  <div class="tools-wrap">
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-friends">
+  		
+  			<div class="friends-wrap" id="js-friends">
+  			
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="https://io.n7then.com">可达鸭</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://shawnzeng.com">shawn</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="https://sa.bi">sabi - 我有一壶酒,足矣慰风霜</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="https://itroy.cc">Troy</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="https://doctorfei.github.io/">王鹏飞</a>
+  	        
+  	        </div>
+  		
+    	</section>
+    
+
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

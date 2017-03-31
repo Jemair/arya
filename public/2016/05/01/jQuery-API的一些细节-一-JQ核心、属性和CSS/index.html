@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>jQuery API的一些细节(一)--JQ核心、属性和CSS | LiamW - 每一次的相遇都是久别重逢</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近在学jQ的时候发现好多细节没有注意到。比如each()方法、index()方法。所以决定干脆仔仔细细把手册读一遍。本文的所有内容都是基于jQuery 1.11版本，如果以后学力有余再回来把兼容性的问题再补上。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery API的一些细节(一)--JQ核心、属性和CSS">
+<meta property="og:url" content="http://yoursite.com/2016/05/01/jQuery-API的一些细节-一-JQ核心、属性和CSS/index.html">
+<meta property="og:site_name" content="LiamW - 每一次的相遇都是久别重逢">
+<meta property="og:description" content="最近在学jQ的时候发现好多细节没有注意到。比如each()方法、index()方法。所以决定干脆仔仔细细把手册读一遍。本文的所有内容都是基于jQuery 1.11版本，如果以后学力有余再回来把兼容性的问题再补上。">
+<meta property="og:updated_time" content="2017-02-09T02:08:00.629Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery API的一些细节(一)--JQ核心、属性和CSS">
+<meta name="twitter:description" content="最近在学jQ的时候发现好多细节没有注意到。比如each()方法、index()方法。所以决定干脆仔仔细细把手册读一遍。本文的所有内容都是基于jQuery 1.11版本，如果以后学力有余再回来把兼容性的问题再补上。">
+  
+  
+    <link rel="icon" href="http://og08ttv6v.bkt.clouddn.com/favicon.png">
+  
+  <link rel="stylesheet" href="/main.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="http://og08ttv6v.bkt.clouddn.com/user-icon1.gif" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">LiamW</a></h1>
+		</hgroup>
+
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/tags/js">js</a></li>
+	        
+				<li><a href="/tags/学习笔记">学习笔记</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+            
+    			
+            
+    			
+    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">友链</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-list"></i></div>
+  		<h1 class="header-author js-mobile-header hide">LiamW</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img src="http://og08ttv6v.bkt.clouddn.com/user-icon1.gif" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">LiamW</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/tags/js">js</a></li>
+		        
+					<li><a href="/tags/学习笔记">学习笔记</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+        <article id="post-jQuery-API的一些细节-一-JQ核心、属性和CSS" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jQuery API的一些细节(一)--JQ核心、属性和CSS
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近在学jQ的时候发现好多细节没有注意到。比如<code>each()</code>方法、<code>index()</code>方法。所以决定干脆仔仔细细把手册读一遍。本文的所有内容都是基于jQuery 1.11版本，如果以后学力有余再回来把兼容性的问题再补上。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="一、核心"><a href="#一、核心" class="headerlink" title="一、核心"></a>一、核心</h2><h3 id="jQuery核心函数"><a href="#jQuery核心函数" class="headerlink" title="jQuery核心函数"></a>jQuery核心函数</h3><ul>
+<li><p><code>jQuery()</code> 即 <code>$()</code></p>
+<ul>
+<li>传入CSS选择器时，选中匹配的元素</li>
+<li><p>传入第二个参数<code>[context]</code>时，代表在<code>context</code>中查找元素</p>
+<p>  <em>在一个由AJAX返回的XML文档中，查找所有的div元素</em></p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">"div"</span>, xml.responseXML);</div></pre></td></tr></table></figure>
+</li>
+<li><p>传入一个jQuery对象时，克隆传入的这个对象</p>
+<p>  <em>克隆一个自定义对象</em></p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">F</span> (<span class="params">name</span>) </span>&#123;</div><div class="line">	<span class="keyword">this</span>.name = name;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> f = <span class="keyword">new</span> F(<span class="string">'f'</span>);</div><div class="line"><span class="keyword">var</span> a = $(f);</div><div class="line">a.name = <span class="string">'x'</span>;</div><div class="line"><span class="built_in">console</span>.info(f);    <span class="comment">//F &#123;name: "f"&#125;</span></div><div class="line"><span class="built_in">console</span>.info(a);    <span class="comment">//[F, name: "x"]</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>不传入参数时，返回一个空的jQuery对象</p>
+</li>
+<li><p>传入HTML对象时，创建一个DOM元素的HTML字符串，作用类似<code>document.createElement()</code></p>
+<p>  <em>动态创建一个div元素（以及其中的内容），并将它追加到body元素中</em></p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">"&lt;div&gt;&lt;p&gt;Hello&lt;/p&gt;&lt;/div&gt;"</span>).appendTo(<span class="string">"body"</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>传入HTML对象时，可以再传入一个json对象，表示要为这个对象添加上的属性、事件或方法（在实际测试中发现传入的这个HTML对象不能含有内容，包括HTML标签和文本。）</p>
+<p>  <em>创建一个 <code>&lt;input&gt;</code> 元素，同时设定 type 属性、属性值，以及一些事件</em></p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">"&lt;input&gt;"</span>, &#123;</div><div class="line">  <span class="attr">type</span>: <span class="string">"text"</span>,</div><div class="line">  <span class="attr">val</span>: <span class="string">"Test"</span>,</div><div class="line">  <span class="attr">focusin</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    $(<span class="keyword">this</span>).addClass(<span class="string">"active"</span>);</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">focusout</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    $(<span class="keyword">this</span>).removeClass(<span class="string">"active"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;).appendTo(<span class="string">"form"</span>);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>$(function(){})</code> 即 <code>$(document).ready()</code>的简写</p>
+<ul>
+<li>和<code>window.onload</code> 的区别：<ul>
+<li>一个页面中只能有一个<code>window.onload</code>，如果存在多个，程序只会执行最后一个</li>
+<li>一个页面中可以有多个<code>$(document).ready()</code>，程序会顺序执行所有的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="jQuery事件绑定"><a href="#jQuery事件绑定" class="headerlink" title="jQuery事件绑定"></a>jQuery事件绑定</h3><ul>
+<li><code>each()</code><ul>
+<li><code>each()</code>方法的作用是<strong>以每一个匹配的元素作为上下文来执行一个函数</strong>。这意味着可以使用<code>this</code>关键字来指代循环中的每一个元素(此处指代的是普通的JS对象而非jQuery对象，需要使用$(this))。</li>
+<li>可以使用<code>return</code>语句来提前跳出循环。<ul>
+<li><code>return false</code>将会停止循环，作用类似于普通的循环中使用<code>break</code></li>
+<li><code>return true</code>将会跳入下一循环，作用类似于普通循环中的<code>continue</code></li>
+</ul>
+</li>
+<li><code>each()</code>中使用<code>index()</code>方法有要特别注意的地方</li>
+</ul>
+</li>
+<li><p><code>index()</code></p>
+<ul>
+<li><p><code>index()</code>方法可以搜索匹配的元素，并返回相应元素的索引值，从0开始计数</p>
+<p>  <em>查找元素的索引值</em><br>  <em>html代码</em></p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"foo"</span>&gt;</span>foo<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"bar"</span>&gt;</span>bar<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"baz"</span>&gt;</span>baz<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"car"</span>&gt;</span>car<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>  <em>jQuery代码</em></p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'#car'</span>).index()       <span class="comment">//0；不传递参数，返回这个元素在同级HTML元素中的索引位置</span></div><div class="line">$(<span class="string">'#car'</span>).index(<span class="string">'li'</span>)   <span class="comment">//3；传递一个选择器，返回这个元素在参数选中元素集合中的索引位置</span></div><div class="line">$(<span class="string">'li'</span>).index(<span class="built_in">document</span>.getElementById(<span class="string">'car'</span>))</div><div class="line">                        <span class="comment">//3；传递一个DOM对象，返回参数对象在这个集合中的位置，这个DEMO中返回#car在li中的位置</span></div><div class="line">$(<span class="string">'li'</span>).index($(<span class="string">'#bar'</span>)); <span class="comment">//1</span></div><div class="line">$(<span class="string">'li'</span>).index($(<span class="string">'li:gt(0)'</span>)); <span class="comment">//1；传递一组元素，返回这组元素中第一个元素在原先集合中的索引位置</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据缓存"><a href="#数据缓存" class="headerlink" title="数据缓存"></a>数据缓存</h3><ul>
+<li><code>data()</code>和<code>removeData()</code><ul>
+<li>用于在DOM元素上添加和移除名值对数据</li>
+<li>名值对在HTML上以自定义属性存储，这个自定义属性以<code>data-</code>开头</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="二、属性"><a href="#二、属性" class="headerlink" title="二、属性"></a>二、属性</h2><ul>
+<li><p><code>attr()</code> 和 <code>removeAttr()</code>， <code>prop()</code> 和 <code>removeProp()</code></p>
+<ul>
+<li>这两组方法的作用都是添加（获取）和删除被选元素的属性值</li>
+<li>值得特别注意的是，不同于其他大多数方法对集合的操作会对集合中每一个元素生效，用这种方式来获取属性值时，<strong>只能获取到集合中第一个元素的属性值</strong>（设置和删除时依旧是对集合操作）</li>
+<li><p><code>attr()</code>和<code>prop()</code>的区别</p>
+<ul>
+<li>attr 和 prop都可以被翻译为属性，但为了以示区别，通常把attr翻译为属性，prop翻译为特性</li>
+<li><p>当用这两个方法获取元素的src属性时，HTML中是怎么写的<code>attr()</code>就会返回什么值，而<code>prop()</code>则会返回地址的经过计算后的完整路径，但是在设置src时这两个方法没有区别</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"../images/15.jpg"</span> <span class="attr">alt</span>=<span class="string">"1"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"../images/16.jpg"</span> <span class="attr">alt</span>=<span class="string">"1"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"../images/17.jpg"</span> <span class="attr">alt</span>=<span class="string">"1"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"../images/18.jpg"</span> <span class="attr">alt</span>=<span class="string">"1"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"../images/19.jpg"</span> <span class="attr">alt</span>=<span class="string">"1"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="built_in">console</span>.info(<span class="string">'prop:'</span> + $(<span class="string">'img'</span>).prop(<span class="string">'src'</span>));       <span class="comment">//prop:file:///C:/Users/1/images/15.jpg</span></div><div class="line"><span class="built_in">console</span>.info(<span class="string">'attr:'</span> + $(<span class="string">'img'</span>).attr(<span class="string">'src'</span>));       <span class="comment">//attr:../images/15.jpg</span></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>对于属性值为Boolean型的属性（比如input的checked属性）来说，attr只表示在HTML页面诞生时这个属性的状态，所以不能用<code>attr()</code>方法来动态的修改这些属性的值。而prop是随着checked属性变化而变化的，也就是说<strong>在修改属性值为Boolean的属性时，一定要使用<code>prop()</code>方法</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="CSS类操作"><a href="#CSS类操作" class="headerlink" title="CSS类操作"></a>CSS类操作</h3><ul>
+<li><p><code>addClass()</code>、<code>removeClass()</code>和<code>toggleClass()</code></p>
+<ul>
+<li>这三个方法都用来操作DOM元素的类名</li>
+<li><p>可以稍微注意一下的是他们的参数都可以是一个函数，这个函数都会接受两个参数。第一个参数为对象在这个集合中的索引值(index),第二个参数时这个对象原先的class属性值，返回值都是一个字符串，其中保存了要添加或删除时的类名，以空格分隔<br>  <em>为每个li添加不一样的类名</em></p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'li'</span>).addClass(<span class="function"><span class="keyword">function</span>(<span class="params">i</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">'list'</span> + i;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>  <em>从最后一个元素上删除与前面元素重复的类名</em></p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'li:last'</span>).removeClass(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> str = <span class="string">""</span>;</div><div class="line">    $(<span class="string">'li'</span>).not(<span class="keyword">this</span>).each(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    	str += $(<span class="keyword">this</span>).attr(<span class="string">'class'</span>)</div><div class="line">    	str += <span class="string">" "</span></div><div class="line">    &#125;)</div><div class="line">    <span class="keyword">return</span> str;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>  <em>根据情况决定要切换的类名（而不是在两个类名中切换）</em></p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'div.foo'</span>).toggleClass(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> ($(<span class="keyword">this</span>).parent().is(<span class="string">'.bar'</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">'happy'</span>;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">'sad'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="HTML代码、文本、值"><a href="#HTML代码、文本、值" class="headerlink" title="HTML代码、文本、值"></a>HTML代码、文本、值</h3><ul>
+<li><code>html()</code>、<code>text()</code><ul>
+<li>作用类似于<code>innerHTML</code>和<code>innerText</code>。在text()方法中传入的以html标签形式书写的字符串(如：<code>&lt;div&gt;&lt;/div&gt;</code>)会被原样打印</li>
+<li><strong>不同于innerText，text()方法传入的内容不会添加到DOM元素的文本节点上，而是直接覆盖DOM元素的所有内容</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="三、CSS"><a href="#三、CSS" class="headerlink" title="三、CSS"></a>三、CSS</h2><h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><ul>
+<li><code>css()</code><ul>
+<li>在用JQ写动画的时候css()方法有时比animate()方法管用<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    $(<span class="string">'div'</span>).css(&#123;</div><div class="line">        <span class="attr">width</span>: oDiv.width() + <span class="number">5</span></div><div class="line">    &#125;)</div><div class="line">&#125;, <span class="number">30</span>)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h3><p><strong>此条目下所有方法都只能获得第一个匹配元素的对应属性</strong></p>
+<ul>
+<li><code>offset()</code><ul>
+<li>不要忘了这里的<code>offset()</code>是一个方法了，也就是说要获取left值需要写<code>offset().left</code>，也可以直接用这个表达式为元素赋位置值</li>
+</ul>
+</li>
+<li><code>position()</code><ul>
+<li>获取元素相对于定位父级元素的偏移</li>
+<li>仅对可见元素有效</li>
+</ul>
+</li>
+<li><code>height()</code> <code>width()</code><ul>
+<li>除了可以获取也可以用来设置，不需要用CSS()方法</li>
+</ul>
+</li>
+<li><code>innerHeight()</code><ul>
+<li>获取元素内部的区域高度（包括padding，不包括border）</li>
+</ul>
+</li>
+<li><code>outerHeight</code><ul>
+<li>包括border</li>
+<li>默认传入参数为false，不包括margin</li>
+<li>传入参数true时也包括margin</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/05/01/jQuery-API的一些细节-一-JQ核心、属性和CSS/" class="archive-article-date">
+  	<time datetime="2016-05-01T15:11:37.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-05-01</time>
+</a>
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/">js</a></li></ul>
+	</div>
+
+      
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/05/12/jQuery-API的一些细节-二-选择器、文档处理和筛选/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          jQuery API的一些细节(二)--选择器、文档处理和筛选
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="jQuery-API的一些细节-一-JQ核心、属性和CSS" data-title="jQuery API的一些细节(一)--JQ核心、属性和CSS" data-url="http://yoursite.com/2016/05/01/jQuery-API的一些细节-一-JQ核心、属性和CSS/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"liamw"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 LiamW
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: true,
+		root: "/",
+		innerArchive: false
+	}
+</script>
+
+<script src="/./main.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+<div class="tools-col">
+  <ul class="btn-wrap">
+    
+    
+    
+      <li data-hook="tools-section-friends"><span class="text">友链</span><i class="icon-link"></i></li>
+    
+    
+  </ul>
+  <div class="tools-wrap">
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-friends">
+  		
+  			<div class="friends-wrap" id="js-friends">
+  			
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="https://io.n7then.com">可达鸭</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://shawnzeng.com">shawn</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="https://sa.bi">sabi - 我有一壶酒,足矣慰风霜</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="https://itroy.cc">Troy</a>
+  	        
+  	          <a target="_blank" class="main-nav-link switch-friends-link" href="https://doctorfei.github.io/">王鹏飞</a>
+  	        
+  	        </div>
+  		
+    	</section>
+    
+
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
